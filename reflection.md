@@ -66,13 +66,11 @@ To verify the repairs, I added pytest cases in `tests/test_game_logic.py` for wi
 
 ## 4. What did you learn about Streamlit and state?
 
-- How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+I learned that Streamlit reruns the Python script when the user interacts with widgets, so normal local variables do not always behave like persistent game data. `st.session_state` is useful because it stores values such as the secret number, attempts, score, status, and history across reruns. I would explain it as a small storage area that lets the app remember important information even though the script executes again. This project helped me understand why state management is important in interactive applications.
 
 ---
 
 ## 5. Looking ahead: your developer habits
 
-- What is one habit or strategy from this project that you want to reuse in future labs or projects?
-  - This could be a testing habit, a prompting strategy, or a way you used Git.
-- What is one thing you would do differently next time you work with AI on a coding task?
-- In one or two sentences, describe how this project changed the way you think about AI generated code.
+One habit I want to reuse in future projects is reproducing and documenting a bug before changing the code. I also want to keep using small automated tests as a form of verification instead of assuming that a fix works because the code looks correct. When working with AI in the future, I would give it one focused problem at a time and review its proposed changes before accepting them. This project changed the way I think about AI-generated code because I now see AI as a useful pair programmer, but human-in-the-loop judgment is still necessary to catch hallucinations, choose appropriate fixes, and verify the result with a test set.
+

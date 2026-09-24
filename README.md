@@ -25,29 +25,32 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+### Game Purpose
+
+The purpose of this project was to investigate and repair an AI-generated number guessing game built with Streamlit. The game asks the player to guess a secret number while providing Higher/Lower hints and tracking attempts and score.
+
+### Bugs Found
+
+During testing, I identified several problems in the starter code. The Higher/Lower hints were reversed, the attempt counter started at the wrong value, and some game-state information did not update consistently. I also found logic that changed the type of the secret value during gameplay, which could create inconsistent comparisons.
+
+### Fixes Applied
+
+I refactored the core game logic from `app.py` into `logic_utils.py` so that it could be tested separately from the Streamlit interface. I corrected the Higher/Lower logic, fixed the attempt initialization, kept the secret number as an integer, improved the new-game reset behavior, and added automated pytest coverage for the repaired logic.
 
 ## 📸 Demo Walkthrough
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
-
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+1. The user launches the Streamlit game and selects a difficulty.
+2. The game creates a secret number and displays the allowed range and remaining attempts.
+3. If the secret is 50 and the user enters 40, the game returns `Go HIGHER!`.
+4. If the user then enters 70, the game returns `Go LOWER!`.
+5. When the user enters 50, the game displays `Correct!`, updates the final score, and ends the game.
+6. Selecting New Game resets the attempts, score, history, status, and secret number for another round.
 
 ## 🧪 Test Results
 
-```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
-```
+Automated tests were created in `tests/test_game_logic.py` to verify winning guesses, guesses that are too high or too low, hint messages, parsing, difficulty ranges, and scoring.
+
+The full terminal output is saved in `test_results.txt`.
 
 ## 🚀 Stretch Features
 
