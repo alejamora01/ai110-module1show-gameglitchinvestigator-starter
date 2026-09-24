@@ -4,19 +4,47 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 1. What was broken when you started?
 
-- What did the game look like the first time you ran it?
-- List at least two concrete bugs you noticed at the start  
-  (for example: "the hints were backwards").
+The first time I ran the game, it opened correctly in Streamlit and allowed me to choose a difficulty, enter guesses, and see the Developer Debug Info. However, I noticed several logic and state problems while testing it. The biggest issues were incorrect Higher/Lower hints, inconsistent score/debug information after a correct guess, and incorrect attempt counting. I also reviewed the relevant code in `app.py` to connect each visible bug with a suspicious section of the implementation.
 
-**Bug Reproduction Log**
+### Bug 1: Higher/Lower hints are reversed
 
-Document at least 3 bugs you found. Add rows as needed.
+**Input/Trigger:** Enter a guess that is lower or higher than the secret number.
 
-| Input | Expected Behavior | Actual Behavior | Console Output / Error |
-|-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+**Expected behavior:** If the guess is lower than the secret, the game should say "Go HIGHER!". If the guess is higher than the secret, it should say "Go LOWER!".
+
+**Actual behavior:** The game gives the opposite direction.
+
+**Suspected code location:** `app.py`, function `check_guess()`. The messages associated with the `guess > secret` and `guess < secret` conditions are reversed.
+
+### Bug 2: Debug score and history do not immediately match the result
+
+**Input/Trigger:** I viewed the secret number in Developer Debug Info, entered the correct secret number `45`, and submitted the guess.
+
+**Expected behavior:** The game should show the win and the Developer Debug Info should reflect the updated score and guess history.
+
+**Actual behavior:** The game displayed "Correct!" and a final score of 70, but the Developer Debug Info still displayed `Score: 0` and `History: []` during that render.
+
+**Suspected code location:** `app.py`, the order in which the Developer Debug Info is rendered compared with the later session-state updates inside the submit block.
+
+### Bug 3: Attempts start at the wrong value
+
+**Input/Trigger:** Start the game for the first time in Normal difficulty.
+
+**Expected behavior:** Before making any guesses, attempts should start at 0 and all 8 attempts should be available.
+
+**Actual behavior:** The session state initializes `attempts` to 1, so the interface can show only 7 attempts left before the player has actually used a guess.
+
+**Suspected code location:** `app.py`, session state initialization where `st.session_state.attempts = 1`.
+
+### Bug Reproduction Logs
+
+| Input Used | Expected Behavior | Actual Behavior | Console Error / Output | Suspected Code Location |
+|---|---|---|---|---|
+| Guess lower than secret | Hint should say "Go HIGHER!" | Hint says "Go LOWER!" | none | `app.py`, `check_guess()` |
+| Correct guess `45` | Win, score and history should all update consistently | Win shows final score 70, while debug panel still showed Score 0 and History [] | none | `app.py`, debug render and submit/session-state update order |
+| Start Normal game before any guess | Attempts should start at 0 and show 8 attempts left | Attempts initialize at 1, effectively showing 7 attempts left | none | `app.py`, session-state initialization |
+
+I did not fix these problems during Phase 1. My goal was to reproduce the behavior, document what I observed, and connect each symptom to the code before making changes.
 
 ---
 
@@ -49,50 +77,3 @@ Document at least 3 bugs you found. Add rows as needed.
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
-
-## Glitch 2: Higher/Lower Hints Are Reversed
-
-### Investigation
-
-While reviewing the game behavior and source code, I found that the Higher/Lower hint logic is reversed.
-
-If the player's guess is greater than the secret number, the game should tell the player to guess LOWER.
-
-If the player's guess is less than the secret number, the game should tell the player to guess HIGHER.
-
-However, the current implementation associates the comparison with the wrong message.
-
-### Expected behavior
-
-- Guess < secret → "Go HIGHER!"
-- Guess > secret → "Go LOWER!"
-
-### Actual behavior
-
-The game can give the opposite instruction, which makes the hint misleading and can send the player farther away from the correct answer.
-
-### Initial hypothesis
-
-The conditional comparisons themselves are understandable, but the hint messages connected to those conditions appear to have been reversed.
-
-## Glitch 3: Game State Behavior Needs Verification
-
-The project description indicates that the secret number may reset when Streamlit reruns the application after a button click.
-
-Streamlit reruns the Python script whenever the user interacts with widgets, so values that need to persist between interactions should normally be stored in session state.
-
-During my initial test, I was able to correctly guess the displayed secret number, so I did not assume that the secret-reset bug occurred in every run. I marked this behavior for further verification before modifying the code.
-
-## Phase 1 Conclusion
-
-This investigation showed why verification is important when working with AI-generated code. I did not assume that every documented bug would reproduce exactly the same way. I compared the visible behavior with the expected behavior and used human judgment before planning any changes.
-
-The main issues identified for further investigation and repair are:
-
-1. Inconsistent debug information after state updates.
-2. Incorrect Higher/Lower hint behavior.
-3. Potential problems with persistent Streamlit game state.
-4. Score and attempt calculations that need verification.
-
-This completes my initial Glitch Hunt before making repairs.
-
