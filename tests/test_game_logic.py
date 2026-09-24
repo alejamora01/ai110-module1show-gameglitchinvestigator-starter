@@ -48,3 +48,33 @@ def test_difficulty_ranges():
 
 def test_first_attempt_win_score():
     assert update_score(0, "Win", 1) == 90
+
+
+def test_negative_number_parses_as_integer():
+    assert parse_guess("-5") == (True, -5, None)
+
+
+def test_decimal_input_is_rejected():
+    ok, value, error = parse_guess("3.14")
+    assert ok is False
+    assert value is None
+    assert error == "That is not a whole number."
+
+
+def test_extremely_large_number_is_handled():
+    large_value = "999999999999999999999"
+    ok, value, error = parse_guess(large_value)
+    assert ok is True
+    assert value == int(large_value)
+    assert error is None
+
+
+def test_whitespace_only_input_is_rejected():
+    ok, value, error = parse_guess("   ")
+    assert ok is False
+    assert value is None
+    assert error == "Enter a guess."
+
+
+def test_large_guess_compares_correctly():
+    assert check_guess(999999, 50) == "Too High"

@@ -1,0 +1,22 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0 -- /Users/alejamora/ai110-module1show-gameglitchinvestigator-starter/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/alejamora/ai110-module1show-gameglitchinvestigator-starter
+collecting ... collected 14 items
+
+tests/test_game_logic.py::test_winning_guess PASSED                      [  7%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [ 14%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 21%]
+tests/test_game_logic.py::test_high_guess_tells_player_to_go_lower PASSED [ 28%]
+tests/test_game_logic.py::test_low_guess_tells_player_to_go_higher PASSED [ 35%]
+tests/test_game_logic.py::test_parse_valid_guess PASSED                  [ 42%]
+tests/test_game_logic.py::test_parse_invalid_guess PASSED                [ 50%]
+tests/test_game_logic.py::test_difficulty_ranges PASSED                  [ 57%]
+tests/test_game_logic.py::test_first_attempt_win_score PASSED            [ 64%]
+tests/test_game_logic.py::test_negative_number_parses_as_integer PASSED  [ 71%]
+tests/test_game_logic.py::test_decimal_input_is_rejected PASSED          [ 78%]
+tests/test_game_logic.py::test_extremely_large_number_is_handled PASSED  [ 85%]
+tests/test_game_logic.py::test_whitespace_only_input_is_rejected PASSED  [ 92%]
+tests/test_game_logic.py::test_large_guess_compares_correctly PASSED     [100%]
+
+============================== 14 passed in 0.03s ==============================

@@ -74,3 +74,32 @@
 **Which did you prefer and why?**
 
 <!-- Your conclusion -->
+
+## Challenge 1: Advanced Edge-Case Testing
+
+### AI Prompt Used
+
+I asked my AI coding assistant:
+
+> Identify at least three edge-case inputs that could break or expose weaknesses in this number guessing game. Generate pytest tests for those cases and keep the tests simple and consistent with the existing `logic_utils.py` behavior.
+
+### Edge Cases Chosen
+
+1. **Negative number input (`-5`)**  
+   I chose this case because negative integers are syntactically valid numbers even though they may fall outside the game's normal range. The test verifies that parsing still works consistently.
+
+2. **Decimal input (`3.14`)**  
+   I chose this case because the game expects whole-number guesses. The test verifies that decimal strings are rejected gracefully instead of causing a crash.
+
+3. **Extremely large integer input**  
+   I chose this case to verify that very large numeric strings can still be parsed safely by Python and handled by the comparison logic.
+
+4. **Whitespace-only input**  
+   I added this case because blank-looking input should be treated as missing input instead of being accepted or causing an exception.
+
+5. **Extremely large guess comparison**  
+   This verifies that the core comparison logic still returns `Too High` for a very large valid integer.
+
+### Verification
+
+I ran the complete pytest test set after adding the edge cases. I accepted the AI-generated test ideas because they were small, readable, and directly tested input parsing and comparison behavior without changing the game logic.
