@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0 -- /Library/Developer/CommandLineTools/usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alejamora/ai110-module1show-gameglitchinvestigator-starter
+collecting ... collected 9 items
+
+tests/test_game_logic.py::test_winning_guess PASSED                      [ 11%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [ 22%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 33%]
+tests/test_game_logic.py::test_high_guess_tells_player_to_go_lower PASSED [ 44%]
+tests/test_game_logic.py::test_low_guess_tells_player_to_go_higher PASSED [ 55%]
+tests/test_game_logic.py::test_parse_valid_guess PASSED                  [ 66%]
+tests/test_game_logic.py::test_parse_invalid_guess PASSED                [ 77%]
+tests/test_game_logic.py::test_difficulty_ranges PASSED                  [ 88%]
+tests/test_game_logic.py::test_first_attempt_win_score PASSED            [100%]
+
+============================== 9 passed in 0.04s ===============================

@@ -1,26 +1,58 @@
 def get_range_for_difficulty(difficulty: str):
-    """Return (low, high) inclusive range for a given difficulty."""
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    """Return the inclusive number range for a difficulty."""
+    if difficulty == "Easy":
+        return 1, 20
+    if difficulty == "Normal":
+        return 1, 100
+    if difficulty == "Hard":
+        return 1, 200
+    return 1, 100
 
 
 def parse_guess(raw: str):
     """
-    Parse user input into an int guess.
+    Parse user input into an integer guess.
 
-    Returns: (ok: bool, guess_int: int | None, error_message: str | None)
+    Returns:
+        (ok, guess_int, error_message)
     """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    if raw is None or raw.strip() == "":
+        return False, None, "Enter a guess."
+
+    try:
+        value = int(raw)
+    except (ValueError, TypeError):
+        return False, None, "That is not a whole number."
+
+    return True, value, None
 
 
-def check_guess(guess, secret):
-    """
-    Compare guess to secret and return (outcome, message).
+def check_guess(guess: int, secret: int):
+    """Compare the guess with the secret number."""
+    # FIXME: The original AI-generated version reversed Higher/Lower hints.
+    # FIX: Refactored with AI assistance and verified with pytest.
+    if guess == secret:
+        return "Win"
+    if guess > secret:
+        return "Too High"
+    return "Too Low"
 
-    outcome examples: "Win", "Too High", "Too Low"
-    """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+
+def get_hint_message(outcome: str):
+    """Return the player-facing hint for a guess outcome."""
+    if outcome == "Win":
+        return "🎉 Correct!"
+    if outcome == "Too High":
+        return "📉 Go LOWER!"
+    if outcome == "Too Low":
+        return "📈 Go HIGHER!"
+    return ""
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
-    """Update score based on outcome and attempt number."""
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    """Update score based on the outcome and attempt number."""
+    if outcome == "Win":
+        points = max(10, 100 - 10 * attempt_number)
+        return current_score + points
+
+    return current_score
