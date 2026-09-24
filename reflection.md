@@ -50,18 +50,17 @@ I did not fix these problems during Phase 1. My goal was to reproduce the behavi
 
 ## 2. How did you use AI as a teammate?
 
-- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
-- Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
-- Give one example of an AI suggestion you did not accept as written (including what the AI suggested, why you rejected or changed it, and how you verified your version). It does not have to be a suggestion that was wrong: over-engineered, out of scope, harder to read, or a poor fit for this codebase all count.
+I used AI as a coding teammate to help isolate the game logic from the Streamlit UI. One suggestion I accepted was moving functions such as `check_guess`, `parse_guess`, difficulty range handling, and score logic into `logic_utils.py`. This was useful because it made the logic easier to read and test independently from the interface. I verified the refactor by running pytest and by launching the Streamlit app again.
+
+Another AI suggestion needed modification instead of being accepted exactly as written. The initial repair approach focused on changing multiple parts of the app at once, but I wanted the fixes to remain simple and close to the starter structure. I kept the core refactor and bug fixes, but avoided adding unnecessary abstractions or extra files. I verified the final version by reviewing the diff, running the automated test set, and checking the behavior in the live game.
 
 ---
 
 ## 3. Debugging and testing your fixes
 
-- How did you decide whether a bug was really fixed?
-- Describe at least one test you ran (manual or using pytest)  
-  and what it showed you about your code.
-- Did AI help you design or understand any tests? How?
+I fixed the reversed hint logic so that a guess above the secret returns `Too High` and tells the player to go lower, while a guess below the secret returns `Too Low` and tells the player to go higher. I also fixed the attempt counter so the game begins at 0 attempts instead of 1, and kept the secret value as an integer instead of changing its type on different attempts.
+
+To verify the repairs, I added pytest cases in `tests/test_game_logic.py` for winning guesses, guesses that are too high or too low, hint messages, input parsing, difficulty ranges, and score behavior. I ran the complete test set with pytest and saved the output in `test_results.txt`. I also launched the Streamlit app again to confirm that the game still runs after the refactor.
 
 ---
 
